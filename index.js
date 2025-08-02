@@ -94,23 +94,23 @@ window.addEventListener("keydown", e => {
 
 
     function draw() {
-      let output = "";
-      for (let y = 0; y < level.length; y++) {
-        for (let x = 0; x < level[0].length; x++) {
-          if (inEditMode && x === cursor.x && y === cursor.y) {
-            output += "!"; // Cursor
-          } else if (x === player.x && y === player.y && !inEditMode) {
-            output += "@";
-          } else {
-            const tile = level[y][x];
-            output += tile === "0" ? " " : tile;
-          }
-        }
-        output += "\n";
+  let output = "";
+  for (let y = 0; y < level.length; y++) {
+    for (let x = 0; x < level[0].length; x++) {
+      if (inEditMode && x === cursor.x && y === cursor.y) {
+        output += "!"; // Cursor in edit mode
+      } else if (x === player.x && y === player.y && !inEditMode) {
+        output += "@"; // Player in the game
+      } else {
+        const tile = level[y][x];  // Get tile from the level
+        output += tile !== undefined ? tile : " ";  // Replace undefined with space
       }
-      gameEl.textContent = output;
-      gameEl.className = inEditMode ? "editMode" : "";
     }
+    output += "\n";  // New line for each row
+  }
+  gameEl.textContent = output;
+  gameEl.className = inEditMode ? "editMode" : "";
+}
 
     function update() {
       if (showTextarea) return;
@@ -161,15 +161,21 @@ window.addEventListener("keydown", e => {
     }
 
     function loadLevelFromTextarea() {
-      const raw = levelInput.value.trim();
-      const lines = raw.split("\n").map(line => line.trim());
-      if (lines.length > 0) {
-        level = lines.map(row => row.split(""));
-        resetPlayer();
-        cursor = { x: 0, y: 0 };
-        draw();
-      }
-    }
+  const raw = levelInput.value.trim();  // Get the raw input
+  const lines = raw.split("\n").map(line => line.trim());  // Split lines and trim whitespace
+
+  // Filter out empty lines and rows with no content
+  const filteredLines = lines.filter(line => line.length > 0);
+
+  if (filteredLines.length > 0) {
+    level = filteredLines.map(row => row.split("")); // Create a 2D array for the level
+    resetPlayer(); // Reset player
+    cursor = { x: 0, y: 0 }; // Reset cursor
+    draw(); // Re-draw the game
+  } else {
+    console.log("No valid level data found");
+  }
+}
 
     draw();
     setInterval(update, 150);
