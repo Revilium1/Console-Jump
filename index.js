@@ -123,11 +123,11 @@ window.addEventListener("keydown", e => {
         if (keys["ArrowDown"]) cursor.y = Math.min(level.length - 1, cursor.y + 1);
 
         // Place tiles with keys
-        ["Digit0", "Digit1", "Digit4", "KeyG"].forEach(code => {
+        ["KeySpace", "KeyEquals", "KeyS", "KeyG"].forEach(code => {
           if (keys[code]) {
-            const char = code === "Digit0" ? "0" :
-                         code === "Digit1" ? "1" :
-                         code === "Digit4" ? "4" : "G";
+            const char = code === "KeySpace" ? " " :
+                         code === "KeyEquals" ? "=" :
+                         code === "KeyS" ? "^" : "G";
             level[cursor.y][cursor.x] = char;
           }
         });
@@ -150,6 +150,9 @@ window.addEventListener("keydown", e => {
         }
 
         checkSpike();
+        if (player.y >= level.length) {
+            resetPlayer();
+        }
         checkGoal();
       }
 
