@@ -3,16 +3,16 @@
     const levelInput = document.getElementById("levelInput");
 
     let level = [
-      "00000000000000000000",
-      "00000000000000000000",
-      "00000000000000000000",
-      "00000000000000000000",
-      "0000000000G000000000",
-      "00000000001110000000",
-      "00000000000000000000",
-      "00000000000000111000",
-      "0000000000^000000000",
-      "11111111111111111111"
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "          ###       ",
+      "                    ",
+      "              ###   ",
+      "          ^         ",
+      "####################"
     ].map(row => row.split(""));
 
     const START_POS = { x: 2, y: 8 };
@@ -57,7 +57,7 @@
     function canMoveTo(x, y) {
       if (x < 0 || x >= level[0].length || y < 0 || y >= level.length) return false;
       const tile = level[y][x];
-      return tile === "0" || tile === "^" || tile === "G";
+      return tile === " " || tile === "^" || tile === "G";
     }
 
     function applyGravity() {
@@ -98,7 +98,7 @@ window.addEventListener("keydown", e => {
       for (let y = 0; y < level.length; y++) {
         for (let x = 0; x < level[0].length; x++) {
           if (inEditMode && x === cursor.x && y === cursor.y) {
-            output += "#"; // Cursor
+            output += "!"; // Cursor
           } else if (x === player.x && y === player.y && !inEditMode) {
             output += "@";
           } else {
@@ -123,10 +123,10 @@ window.addEventListener("keydown", e => {
         if (keys["ArrowDown"]) cursor.y = Math.min(level.length - 1, cursor.y + 1);
 
         // Place tiles with keys
-        ["KeySpace", "KeyEquals", "KeyS", "KeyG"].forEach(code => {
+        ["KeySpace", "KeyA", "Keys", "KeyD"].forEach(code => {
           if (keys[code]) {
             const char = code === "KeySpace" ? " " :
-                         code === "KeyEquals" ? "=" :
+                         code === "KeyA" ? "#" :
                          code === "KeyS" ? "^" : "G";
             level[cursor.y][cursor.x] = char;
           }
