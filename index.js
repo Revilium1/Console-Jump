@@ -125,10 +125,15 @@ window.addEventListener("keydown", e => {
         // Place tiles with keys
         ["Space", "KeyA", "KeyS", "KeyD"].forEach(code => {
           if (keys[code]) {
-            const char = code === "KeySpace" ? " " :
-                         code === "KeyA" ? "#" :
-                         code === "KeyS" ? "^" : "G";
-            level[cursor.y][cursor.x] = char;
+            let char;
+            if (code === "Space") char = " ";
+            else if (code === "KeyA") char = "#";
+            else if (code === "KeyS") char = "^";
+            else if (code === "KeyD") char = "G";
+        
+            if (char !== undefined) {
+              level[cursor.y][cursor.x] = char;
+            }
           }
         });
       } else {
