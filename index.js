@@ -161,8 +161,10 @@ window.addEventListener("keydown", e => {
     }
 
     function loadLevelFromTextarea() {
-  const raw = levelInput.value.trim();  // Get the raw input
-  const lines = raw.split("\n").map(line => line.trim());  // Split lines and trim whitespace
+  const raw = levelInput.value.trim();  // Get the raw input (trim only the overall content)
+  const normalizedInput = raw.replace(/\r\n/g, '\n');  // Normalize to Unix-style newlines
+
+  const lines = normalizedInput.split("\n");  // Split lines without trimming each one
 
   // Filter out empty lines and rows with no content
   const filteredLines = lines.filter(line => line.length > 0);
