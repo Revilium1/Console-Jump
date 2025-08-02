@@ -123,7 +123,7 @@ window.addEventListener("keydown", e => {
         if (keys["ArrowDown"]) cursor.y = Math.min(level.length - 1, cursor.y + 1);
 
         // Place tiles with keys
-        ["KeySpace", "KeyA", "KeyS", "KeyD"].forEach(code => {
+        ["Space", "KeyA", "KeyS", "KeyD"].forEach(code => {
           if (keys[code]) {
             const char = code === "KeySpace" ? " " :
                          code === "KeyA" ? "#" :
