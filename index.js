@@ -67,7 +67,7 @@
 
     function tryJump() {
       const below = player.y + 1;
-      const onGround = below < level.length && level[below][player.x] === "1";
+      const onGround = below < level.length && level[below][player.x] === "#";
       if (!player.jumping && onGround) {
         player.jumping = true;
         player.jumpProgress = player.jumpHeight;
@@ -123,7 +123,7 @@ window.addEventListener("keydown", e => {
         if (keys["ArrowDown"]) cursor.y = Math.min(level.length - 1, cursor.y + 1);
 
         // Place tiles with keys
-        ["KeySpace", "KeyA", "Keys", "KeyD"].forEach(code => {
+        ["KeySpace", "KeyA", "KeyS", "KeyD"].forEach(code => {
           if (keys[code]) {
             const char = code === "KeySpace" ? " " :
                          code === "KeyA" ? "#" :
