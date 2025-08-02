@@ -103,7 +103,6 @@ window.addEventListener("keydown", e => {
         output += "@"; // Player in the game
       } else {
         const tile = level[y][x];  // Get tile from the level
-        output += tile !== undefined ? tile : " ";  // Replace undefined with space
       }
     }
     output += "\n";  // New line for each row
@@ -161,23 +160,32 @@ window.addEventListener("keydown", e => {
     }
 
     function loadLevelFromTextarea() {
-  const raw = levelInput.value.trim();  // Get the raw input (trim only the overall content)
-  const normalizedInput = raw.replace(/\r\n/g, '\n');  // Normalize to Unix-style newlines
+  const raw = levelInput.value;  // Get the raw input (no trimming the entire content)
+  console.log("Raw level input:", raw);  // Log the raw level input for debugging
 
-  const lines = normalizedInput.split("\n");  // Split lines without trimming each one
+  // Normalize newlines and split the input into lines
+  const normalizedInput = raw.replace(/\r\n/g, '\n');  // Normalize newlines
+  const lines = normalizedInput.split("\n");  // Split the text into lines
+
+  console.log("Normalized input:", normalizedInput);  // Log normalized input
 
   // Filter out empty lines and rows with no content
-  const filteredLines = lines.filter(line => line.length > 0);
+  const filteredLines = lines.filter(line => line.trim().length > 0);
+
+  console.log("Filtered lines:", filteredLines);  // Log filtered lines after removing empty rows
 
   if (filteredLines.length > 0) {
-    level = filteredLines.map(row => row.split("")); // Create a 2D array for the level
-    resetPlayer(); // Reset player
-    cursor = { x: 0, y: 0 }; // Reset cursor
-    draw(); // Re-draw the game
+    level = filteredLines.map(row => row.split(""));  // Convert to a 2D array
+    console.log("Level array:", level);  // Log the final level array
+
+    resetPlayer();  // Reset player position
+    cursor = { x: 0, y: 0 };  // Reset cursor position
+    draw();  // Re-draw the game
   } else {
     console.log("No valid level data found");
   }
 }
+
 
     draw();
     setInterval(update, 150);
