@@ -130,10 +130,6 @@ window.addEventListener("keydown", e => {
             else if (code === "KeyA") char = "#";
             else if (code === "KeyS") char = "^";
             else if (code === "KeyD") char = "G";
-        
-            if (char !== undefined) {
-              level[cursor.y][cursor.x] = char;
-            }
           }
         });
       } else {
