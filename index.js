@@ -11,7 +11,7 @@
       "00000000001110000000",
       "00000000000000000000",
       "00000000000000111000",
-      "0000000000S000000000",
+      "0000000000^000000000",
       "11111111111111111111"
     ].map(row => row.split(""));
 
@@ -57,7 +57,7 @@
     function canMoveTo(x, y) {
       if (x < 0 || x >= level[0].length || y < 0 || y >= level.length) return false;
       const tile = level[y][x];
-      return tile === "0" || tile === "4" || tile === "G";
+      return tile === "0" || tile === "^" || tile === "G";
     }
 
     function applyGravity() {
@@ -75,7 +75,7 @@
     }
 
     function checkSpike() {
-      if (level[player.y][player.x] === "4") resetPlayer();
+      if (level[player.y][player.x] === "^") resetPlayer();
     }
 
     function checkGoal() {
