@@ -163,20 +163,20 @@ window.addEventListener("keydown", e => {
   const raw = levelInput.value;  // Get the raw input (no trimming the entire content)
   console.log("Raw level input:", raw);  // Log the raw level input for debugging
 
-  // Normalize newlines and split the input into lines
+  // Normalize to Unix-style newlines
   const normalizedInput = raw.replace(/\r\n/g, '\n');  // Normalize newlines
-  const lines = normalizedInput.split("\n");  // Split the text into lines
-
   console.log("Normalized input:", normalizedInput);  // Log normalized input
 
-  // Filter out empty lines and rows with no content
-  const filteredLines = lines.filter(line => line.trim().length > 0);
+  // Split by newlines and remove empty lines
+  const lines = normalizedInput.split("\n");  // Split the input into lines
+  const filteredLines = lines.filter(line => line.length > 0);  // Remove empty lines
 
   console.log("Filtered lines:", filteredLines);  // Log filtered lines after removing empty rows
 
   if (filteredLines.length > 0) {
-    level = filteredLines.map(row => row.split(""));  // Convert to a 2D array
-    console.log("Level array:", level);  // Log the final level array
+    // Convert each line into an array of characters (2D array)
+    level = filteredLines.map(row => row.split(""));
+    console.log("Loaded level array:", level);  // Log the final level array
 
     resetPlayer();  // Reset player position
     cursor = { x: 0, y: 0 };  // Reset cursor position
