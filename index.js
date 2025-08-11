@@ -125,7 +125,7 @@ if (keys["ArrowDown"]) cursor.y = Math.min(level.length - 1, cursor.y + 1);
 // Place tiles with keys
 ["Space", "KeyA", "KeyS", "KeyD"].forEach(code => {
 if (keys[code]) {
-            const char = code === "KeySpace" ? " " :
+            const char = code === "Space" ? " " :
                          code === "KeyA" ? "#" :
                          code === "KeyS" ? "^" : "G";
             level[cursor.y][cursor.x] = char;
@@ -160,14 +160,16 @@ draw();
 }
 
 function loadLevelFromTextarea() {
-const raw = levelInput.value.trim();
-const lines = raw.split("\n").map(line => line.trim());
-if (lines.length > 0) {
-level = lines.map(row => row.split(""));
-resetPlayer();
-cursor = { x: 0, y: 0 };
-draw();
+    const raw = levelInput.value.replace(/\r/g, ""); // remove Windows CR
+    const lines = raw.split("\n").map(line => line.padEnd(level[0].length, " "));
+    if (lines.length > 0) {
+        level = lines.map(row => row.split(""));
+        resetPlayer();
+        cursor = { x: 0, y: 0 };
+        draw();
+    }
 }
+
 }
 
 draw();
